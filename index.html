@@ -7,6 +7,151 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Install App Popup Modal -->
+<div id="appInstallModal" class="app-modal">
+    <div class="app-modal-content">
+        <span class="modal-close" onclick="closeAppModal()">×</span>
+        <img src="../assets/Gerard_logo.png" alt="St. Gerard App" style="width:90px; height:auto; margin-bottom:20px; border-radius:12px;">
+        <h2>Install Our App Now!</h2>
+        <p>Book appointments faster, view real-time schedules, get reminders, and stay updated with St. Gerard Dental Clinic – all in one app.</p>
+        
+        <button class="download-apk-btn" onclick="downloadApk()">
+            Download App (.apk)
+        </button>
+        
+        <p class="install-guide">
+            <strong>How to install after download:</strong><br>
+            1. Open the downloaded file from your Downloads or notification bar.<br>
+            2. If prompted, allow installation from this source.<br>
+            3. Go to Settings → Apps → Special app access → Install unknown apps → allow your browser.<br>
+            4. Tap Install and open the app.
+        </p>
+        
+        <p class="small-note">Android only • Safe & secure • ~15MB</p>
+    </div>
+</div>
+
+<style>
+    .app-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.65);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    
+    .app-modal-content {
+        background: white;
+        padding: 32px 24px;
+        border-radius: 20px;
+        max-width: 90%;
+        width: 360px;
+        text-align: center;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        position: relative;
+        animation: popupFade 0.4s ease-out;
+    }
+    
+    @keyframes popupFade {
+        from { opacity: 0; transform: scale(0.92); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 14px;
+        right: 18px;
+        font-size: 34px;
+        color: #aaa;
+        cursor: pointer;
+        line-height: 1;
+    }
+    
+    .modal-close:hover {
+        color: #333;
+    }
+    
+    .download-apk-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 14px 32px;
+        font-size: 17px;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 24px 0 16px;
+        width: 88%;
+        box-shadow: 0 5px 15px rgba(40,167,69,0.35);
+        transition: all 0.2s;
+    }
+    
+    .download-apk-btn:hover {
+        background: #218838;
+        transform: translateY(-2px);
+    }
+    
+    .install-guide {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+        text-align: left;
+        margin: 16px 0 20px;
+        padding: 0 8px;
+    }
+    
+    .small-note {
+        font-size: 12.5px;
+        color: #777;
+    }
+</style>
+
+<script>
+    // ← CHANGE THIS to your actual .apk file location
+    const apkUrl = "../assets/StGerardDentalClinic.apk";   // or "https://yourdomain.com/app.apk"
+
+    function showAppModal() {
+        document.getElementById("appInstallModal").style.display = "flex";
+    }
+
+    function closeAppModal() {
+        document.getElementById("appInstallModal").style.display = "none";
+    }
+
+    function downloadApk() {
+        if (!apkUrl) {
+            alert("APK link is not set yet. Please contact the admin.");
+            return;
+        }
+
+        const link = document.createElement("a");
+        link.href = apkUrl;
+        link.download = "StGerardDentalClinic.apk";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => {
+            alert("Download started!\n\nAfter it finishes:\n• Open the file from your Downloads folder or notification\n• Allow installation if prompted\n• Follow on-screen instructions to install");
+        }, 600);
+
+        // Optional: close modal after click
+        // closeAppModal();
+    }
+
+    // Show popup after 7 seconds (good balance – not too soon, not too late)
+    window.addEventListener("load", () => {
+        setTimeout(showAppModal, 7000);
+    });
+
+    // Make the existing "Download App" button in header also trigger download
+    document.querySelector(".download-btn")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        downloadApk();
+    });
+</script>
     <!-- Navigation Header -->
     <header class="main-header">
         <div class="container">
@@ -24,9 +169,8 @@
                 <a href="#contact" class="nav-link">Contact Us</a>
                 <a href="#reviews" class="nav-link">Reviews</a>
             </nav>
-            <a href="https://drive.usercontent.google.com/download?id=1ywbN7m9nJLSn5rt1wg-ij49CTwgwNVRa&export=download&authuser=0&confirm=t&uuid=46f0033d-baf7-4115-9656-42c83b67bd5e&at=APcXIO2rIOcl1azHND1NILjxjbG9%3A1771758033094" class="download-btn">
-                Download App
-                </a>
+            
+            <button class="download-btn">Download App</button>
         </div>
     </header>
 
